@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Build and Export
-        run: npm run export
+        run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /himchan-version2 # GitHub 레포지토리 이름 설정
 
