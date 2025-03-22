@@ -116,6 +116,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
           "Redux",
           "React-Native",
           "ECharts",
+          "Context API",
         ].includes(content)
       ) {
         return (
