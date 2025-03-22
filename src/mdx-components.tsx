@@ -199,6 +199,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         width={400}
         height={400}
         className='!h-[400px]'
+        unoptimized={true}
       />
     ),
 
