@@ -25,21 +25,21 @@ export default function Layout({ children }: LayoutProps) {
                 <Link
                   href='/'
                   className='text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
-                  Home
+                  HOME
                 </Link>
               </li>
               <li>
                 <Link
                   href='/about'
                   className='text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
-                  About
+                  ABOUT
                 </Link>
               </li>
               <li>
                 <Link
                   href='/blog'
                   className='text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
-                  Blog
+                  BLOG
                 </Link>
               </li>
               <li>
@@ -75,7 +75,7 @@ export default function Layout({ children }: LayoutProps) {
             {/* 소셜 링크 */}
             <div className='flex justify-center gap-6'>
               <a
-                href='https://github.com/devhimchan'
+                href={GITHUB_URL}
                 target='_blank'
                 rel='noopener noreferrer'
                 className='group flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
