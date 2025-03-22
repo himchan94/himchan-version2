@@ -1,9 +1,13 @@
 import createMDX from "@next/mdx";
 import rehypeHighlight from "rehype-highlight";
 
-const isGithubActions = process.env.GITHUB_ACTIONS || false;
-const basePath = isGithubActions ? "/himchan-version2" : "";
-const assetPrefix = isGithubActions ? "/himchan-version2/" : "/";
+// const isGithubActions = process.env.GITHUB_ACTIONS || false;
+// const basePath = isGithubActions ? "/himchan-version2" : "";
+// const assetPrefix = isGithubActions ? "/himchan-version2/" : "/";
+
+const basePath = "";
+const assetPrefix = "/";
+
 const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
   images: {
