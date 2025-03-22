@@ -28,7 +28,7 @@ jobs:
       - name: Build and Export
         run: npm run build
         env:
-          NEXT_PUBLIC_BASE_PATH: /devhimchan # GitHub 레포지토리 이름 설정
+          NEXT_PUBLIC_BASE_PATH: /himchan-version2 # GitHub 레포지토리 이름 설정
 
       - name: Configure output directory
         run: |
