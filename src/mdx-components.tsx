@@ -5,7 +5,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     // 제목 태그들
     h1: ({ children }) => (
-      <h1 className='text-3xl font-bold mt-12 mb-6 text-gray-900 dark:text-white'>
+      <h1 className='mb-8 text-4xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500'>
         {children}
       </h1>
     ),
@@ -19,13 +19,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         return null;
 
       return (
-        <h2 className='text-2xl font-bold mt-10 mb-4 text-gray-900 dark:text-white'>
+        <h2 className='mt-12 mb-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
           {children}
         </h2>
       );
     },
     h3: ({ children }) => (
-      <h3 className='text-xl font-bold mt-8 mb-3 text-gray-900 dark:text-white'>
+      <h3 className='mt-8 mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white'>
         {children}
       </h3>
     ),
@@ -47,14 +47,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     // 텍스트 관련 태그들
     p: ({ children }) => (
-      <p className='my-6 leading-7 text-gray-700 dark:text-gray-300'>
+      <span className='mb-4 leading-7 text-gray-800 dark:text-gray-100'>
         {children}
-      </p>
+      </span>
     ),
     a: ({ children, href }) => (
       <a
         href={href}
-        className='text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2 transition-colors'
+        className='text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline underline-offset-2 transition-colors'
         target={href?.startsWith("http") ? "_blank" : undefined}
         rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}>
         {children}
@@ -69,40 +69,111 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <em className='italic text-gray-900 dark:text-white'>{children}</em>
     ),
     del: ({ children }) => (
-      <del className='line-through text-gray-500 dark:text-gray-400'>
+      <del className='line-through text-gray-700 dark:text-gray-300'>
         {children}
       </del>
     ),
 
     // 리스트 관련 태그들
     ul: ({ children }) => (
-      <ul className='my-6 ml-6 list-disc space-y-2 text-gray-700 dark:text-gray-300'>
+      <ul className='mb-4 ml-6 list-disc text-gray-800 dark:text-gray-100'>
         {children}
       </ul>
     ),
     ol: ({ children }) => (
-      <ol className='my-6 ml-6 list-decimal space-y-2 text-gray-700 dark:text-gray-300'>
+      <ol className='my-6 ml-6 list-decimal space-y-2 text-gray-800 dark:text-gray-100'>
         {children}
       </ol>
     ),
-    li: ({ children }) => <li className='leading-7'>{children}</li>,
+    li: ({ children }) => (
+      <li className='mb-2 leading-7 text-gray-800 dark:text-gray-100'>
+        {children}
+      </li>
+    ),
 
     // 코드 관련 태그들
-    code: ({ children }) => (
-      <code className='rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 font-mono text-sm text-gray-900 dark:text-gray-100'>
-        {children}
-      </code>
-    ),
+    code: ({ children }) => {
+      const content = children?.toString() || "";
+
+      // 프로그래밍 언어 chip (JavaScript, TypeScript, Java)
+      if (["JavaScript", "TypeScript", "Java"].includes(content)) {
+        return (
+          <code className='inline-flex items-center px-3 py-1.5 m-1 text-sm font-semibold rounded-full bg-yellow-50 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-200 border border-yellow-200 dark:border-yellow-800 hover:bg-yellow-100 dark:hover:bg-yellow-900/50 transition-all'>
+            {children}
+          </code>
+        );
+      }
+
+      // 프론트엔드 기술 chip
+      if (
+        [
+          "React",
+          "Next.js",
+          "Tailwind CSS",
+          "Styled-Components",
+          "React-Hook-Form",
+          "Jotai",
+          "Redux",
+          "React-Native",
+          "ECharts",
+        ].includes(content)
+      ) {
+        return (
+          <code className='inline-flex items-center px-3 py-1.5 m-1 text-sm font-semibold rounded-full bg-sky-50 dark:bg-sky-900/30 text-sky-700 dark:text-sky-200 border border-sky-200 dark:border-sky-800 hover:bg-sky-100 dark:hover:bg-sky-900/50 transition-all'>
+            {children}
+          </code>
+        );
+      }
+
+      // 백엔드 기술 chip
+      if (["Spring Boot", "MySQL"].includes(content)) {
+        return (
+          <code className='inline-flex items-center px-3 py-1.5 m-1 text-sm font-semibold rounded-full bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-all'>
+            {children}
+          </code>
+        );
+      }
+
+      // 직급 관련 chip
+      if (content.includes("개발자")) {
+        return (
+          <code className='inline-flex items-center px-3 py-1.5 m-1 text-sm font-semibold rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-200 border border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-all'>
+            {children}
+          </code>
+        );
+      }
+
+      // 회사명 관련 chip
+      if (
+        content.includes("(주)") ||
+        ["한화정밀기계", "퓨처플랜", "콜리몰리", "메이튼", "탱고픽"].includes(
+          content
+        )
+      ) {
+        return (
+          <code className='inline-flex items-center px-3 py-1.5 m-1 text-sm font-semibold rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-all'>
+            {children}
+          </code>
+        );
+      }
+
+      // 기본 chip 스타일
+      return (
+        <code className='rounded bg-gray-100 dark:bg-gray-800 px-2 py-1 font-mono text-sm text-gray-900 dark:text-gray-100'>
+          {children}
+        </code>
+      );
+    },
     pre: ({ children }) => (
-      <pre className='my-6 overflow-x-auto rounded-lg bg-gray-900 p-4 dark:ring-1 dark:ring-gray-800'>
-        {children}
-      </pre>
+      <div className='flex flex-wrap gap-2 my-4'>{children}</div>
     ),
 
     // 기타 태그들
     blockquote: ({ children }) => (
-      <blockquote className='my-6 border-l-4 border-blue-600 dark:border-blue-400 pl-4 italic text-gray-700 dark:text-gray-300'>
-        {children}
+      <blockquote className='pl-6 my-6 border-l-4 border-blue-500 dark:border-blue-400 bg-blue-50 dark:bg-blue-900/20 py-4 rounded-r-lg'>
+        <p className='text-gray-800 dark:text-gray-100 font-medium italic'>
+          {children}
+        </p>
       </blockquote>
     ),
     hr: () => <hr className='my-8 border-gray-200 dark:border-gray-800' />,
@@ -122,15 +193,13 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </td>
     ),
     img: ({ src, alt }) => (
-      <div className='my-6'>
-        <Image
-          src={src || ""}
-          alt={alt || ""}
-          width={800}
-          height={400}
-          className='rounded-lg'
-        />
-      </div>
+      <Image
+        src={src || ""}
+        alt={alt || ""}
+        width={400}
+        height={400}
+        className='!h-[400px]'
+      />
     ),
 
     // 기본 컴포넌트 확장

@@ -10,24 +10,23 @@ interface PostPageProps {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const post = getPostBySlug(params.slug);
+  const { slug } = await params;
+
+  const post = getPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  const MDXContent = dynamic(
-    () => import(`@/content/posts/${params.slug}.mdx`),
-    {
-      loading: () => (
-        <div className='space-y-4 animate-pulse'>
-          <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4'></div>
-          <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3'></div>
-          <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2'></div>
-        </div>
-      ),
-    }
-  );
+  const MDXContent = dynamic(() => import(`@/content/posts/${slug}.mdx`), {
+    loading: () => (
+      <div className='space-y-4 animate-pulse'>
+        <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4'></div>
+        <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3'></div>
+        <div className='h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2'></div>
+      </div>
+    ),
+  });
 
   return (
     <div className='max-w-4xl mx-auto px-4 py-16'>
@@ -45,7 +44,7 @@ export default async function PostPage({ params }: PostPageProps) {
               })}
             </time>
             <span>•</span>
-            <span className='font-medium'>DevHimchan</span>
+            <span className='font-medium'>DEVHIMCHAN</span>
           </div>
         </header>
         <div className='prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-xl prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800'>

@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='ko'>
+    <html lang='ko' className='dark' suppressHydrationWarning>
       <body>
         <Layout>{children}</Layout>
       </body>

@@ -1,21 +1,22 @@
 import createMDX from "@next/mdx";
+import rehypeHighlight from "rehype-highlight";
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  remotePatterns: [
-    {
-      protocol: "https",
-      hostname: "**",
-      pathname: "**",
-    },
-  ],
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https" as const,
+        hostname: "**",
+      },
+    ],
+  },
 };
 
 const withMDX = createMDX({
   options: {
     remarkPlugins: [],
-    rehypePlugins: [],
+    rehypePlugins: [rehypeHighlight],
   },
 });
 
