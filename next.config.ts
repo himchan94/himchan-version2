@@ -6,15 +6,14 @@ const basePath = isGithubActions ? "/himchan-version2" : "";
 const assetPrefix = isGithubActions ? "/himchan-version2/" : "/";
 const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
-  imageOptimization: false,
-  // images: {
-  //   remotePatterns: [
-  //     {
-  //       protocol: "https" as const,
-  //       hostname: "**",
-  //     },
-  //   ],
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https" as const,
+        hostname: "**",
+      },
+    ],
+  },
   basePath,
   assetPrefix,
   trailingSlash: true, // 반드시 추가 (export 대응)

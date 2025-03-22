@@ -14,7 +14,13 @@ const ProfileImage = (props: Props) => {
 
   return (
     <div className={`relative w-32 h-42 ${className || ""}`}>
-      <Image src={src} alt={alt} fill className='object-contain' />
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className='object-contain'
+        unoptimized={true}
+      />
     </div>
   );
 };
