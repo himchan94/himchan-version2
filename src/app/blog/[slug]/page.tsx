@@ -1,12 +1,17 @@
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
-import { getPostBySlug } from "@/lib/posts";
+import { getPostBySlug, getAllPosts } from "@/lib/posts";
 import Link from "next/link";
 
 interface PostPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export default async function PostPage({ params }: PostPageProps) {
