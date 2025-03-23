@@ -28,6 +28,17 @@ export default function PostList({ posts }: PostListProps) {
               <p className='text-gray-600 dark:text-gray-300 group-hover:text-gray-100 mb-4 line-clamp-2 transition-colors duration-300'>
                 {post.description}
               </p>
+              {post.category && post.category.length > 0 && (
+                <div className='flex flex-wrap gap-2 mb-4'>
+                  {post.category.map((cat) => (
+                    <span
+                      key={cat}
+                      className='px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 rounded-full group-hover:bg-white/20 group-hover:text-white transition-colors duration-300'>
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+              )}
               <div className='mt-auto flex items-center text-blue-600 dark:text-blue-400 group-hover:text-white font-medium transition-colors duration-300'>
                 <span>자세히 보기</span>
                 <svg

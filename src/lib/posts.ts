@@ -9,6 +9,7 @@ export interface Post {
   title: string;
   date: string;
   description: string;
+  category?: string[];
   content: string;
 }
 
@@ -22,11 +23,16 @@ export function getAllPosts(): Post[] {
       const fileContents = fs.readFileSync(fullPath, "utf8");
       const { data, content } = matter(fileContents);
 
+      const category = data.category
+        ? data.category.split(",").map((cat: string) => cat.trim())
+        : undefined;
+
       return {
         slug,
         title: data.title,
         date: data.date,
         description: data.description,
+        category,
         content,
       };
     })
@@ -41,11 +47,16 @@ export function getPostBySlug(slug: string): Post | null {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(fileContents);
 
+    const category = data.category
+      ? data.category.split(",").map((cat: string) => cat.trim())
+      : undefined;
+
     return {
       slug,
       title: data.title,
       date: data.date,
       description: data.description,
+      category,
       content,
     };
   } catch (error) {

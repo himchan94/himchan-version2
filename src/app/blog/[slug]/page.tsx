@@ -51,6 +51,17 @@ export default async function PostPage({ params }: PostPageProps) {
             <span>•</span>
             <span className='font-medium'>DEVHIMCHAN</span>
           </div>
+          {post.category && post.category.length > 0 && (
+            <div className='mt-4 flex flex-wrap justify-center gap-2'>
+              {post.category.map((cat) => (
+                <span
+                  key={cat}
+                  className='px-3 py-1 text-sm bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full'>
+                  {cat}
+                </span>
+              ))}
+            </div>
+          )}
         </header>
         <div className='prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-xl prose-pre:bg-gray-900 prose-pre:border prose-pre:border-gray-800'>
           <MDXContent />
