@@ -166,7 +166,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       );
     },
     pre: ({ children }) => (
-      <div className='flex flex-wrap gap-2 my-4'>{children}</div>
+      <pre className='my-4 p-4 overflow-x-auto rounded-lg bg-gray-100 dark:bg-gray-800'>
+        {children}
+      </pre>
     ),
 
     // 기타 태그들
