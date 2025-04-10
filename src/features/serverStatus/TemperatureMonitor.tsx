@@ -8,31 +8,50 @@ type SensorData = {
 
 export default function TemperatureMonitor() {
   const [data, setData] = useState<SensorData | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const socket = new WebSocket("wss://api.devhimchan.com/ws"); // it's ok ^^
+    let socket: WebSocket;
 
-    socket.onmessage = (event) => {
-      try {
-        const parsed: SensorData = JSON.parse(event.data);
-        setData(parsed);
-      } catch (e) {
-        console.error("Parsing error:", e);
-      }
-    };
+    try {
+      socket = new WebSocket("wss://api.devhimchan.com/ws"); // it's ok ^^
 
-    socket.onerror = (err) => {
-      console.error("WebSocket error:", err);
-    };
+      socket.onopen = () => {
+        console.log("WebSocket 연결됨");
+        setError(null);
+      };
+
+      socket.onmessage = (event) => {
+        try {
+          const parsed: SensorData = JSON.parse(event.data);
+          setData(parsed);
+        } catch (e) {
+          console.error("Parsing error:", e);
+        }
+      };
+
+      socket.onerror = (err) => {
+        console.error("WebSocket error:", err);
+        setError("WebSocket 연결 오류가 발생했습니다.");
+      };
+
+      socket.onclose = () => {
+        console.log("WebSocket 연결이 닫혔습니다.");
+        setError("WebSocket 연결이 닫혔습니다.");
+      };
+    } catch (e) {
+      console.error("WebSocket 생성 오류:", e);
+      setError("WebSocket을 생성할 수 없습니다.");
+    }
 
     return () => {
-      // FIXME: 왜 소켓이 없다고 하냐?
-      if (!socket) return;
-
-      socket.close();
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close();
+      }
     };
   }, []);
 
+  if (error) return <div className='text-red-500'>❌ {error}</div>;
   if (!data) return <div>📡 센서 데이터 수신 중...</div>;
 
   return (
@@ -40,15 +59,19 @@ export default function TemperatureMonitor() {
       <h2>
         🖥️ 서버 센서 상태 (최근 {new Date(data.timestamp).toLocaleTimeString()})
       </h2>
-      {Object.entries(data.sensors).map(([sensorData], index) => {
+      {Object.entries(data.sensors).map(([deviceId, values], index) => {
         if (index > 9) return null;
 
-        const [device, values] = sensorData?.split(":");
-
         return (
-          <div key={`${device}-${values}`} className='flex gap-2'>
-            <h4>{device}</h4>
-            <p>{values}</p>
+          <div key={deviceId} className='flex gap-2'>
+            <h4>{deviceId}</h4>
+            <p>
+              {Object.entries(values).map(([key, value]) => (
+                <span key={key}>
+                  {key}: {value}{" "}
+                </span>
+              ))}
+            </p>
           </div>
         );
       })}

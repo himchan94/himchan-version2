@@ -1,10 +1,13 @@
 import PostList from "@/components/PostList";
 import { GITHUB_URL } from "@/consts";
 import { getAllPosts } from "@/lib/posts";
+import { getAllProjects } from "@/lib/projects";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   const posts = getAllPosts().slice(0, 5);
+  const projects = getAllProjects().slice(0, 3);
 
   return (
     <div className='max-w-4xl mx-auto px-4 py-16 sm:py-24'>
@@ -51,6 +54,107 @@ export default function Home() {
             </svg>
           </Link>
         </div>
+      </section>
+
+      {/* 프로젝트 섹션 */}
+      <section className='mb-20'>
+        <div className='flex justify-between items-center mb-10'>
+          <h2 className='text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white'>
+            프로젝트
+          </h2>
+          <Link
+            href='/projects'
+            className='group inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium'>
+            모든 프로젝트 보기
+            <svg
+              className='w-5 h-5 ml-1 transform group-hover:translate-x-1 transition-transform'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M9 5l7 7-7 7'
+              />
+            </svg>
+          </Link>
+        </div>
+
+        {projects.length > 0 ? (
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+            {projects.map((project) => (
+              <div
+                key={project.slug}
+                className='group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full'>
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className='block flex-1'>
+                  <div className='relative h-48 w-full overflow-hidden'>
+                    <Image
+                      src={project.thumbnail || "/images/empty-content.png"}
+                      alt={project.title}
+                      fill
+                      className='object-cover transition-transform duration-500 group-hover:scale-110'
+                    />
+                    <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+                  </div>
+                  <div className='p-6 flex flex-col flex-1'>
+                    <h3 className='text-xl font-bold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors'>
+                      {project.title}
+                    </h3>
+                    <p className='text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 flex-1'>
+                      {project.description}
+                    </p>
+                    <div className='flex flex-wrap gap-2 mb-3'>
+                      {project.tech.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className='px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full'>
+                          {tech}
+                        </span>
+                      ))}
+                      {project.tech.length > 3 && (
+                        <span className='px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded-full'>
+                          +{project.tech.length - 3}
+                        </span>
+                      )}
+                    </div>
+                    <div className='flex justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-700'>
+                      <time className='text-sm text-gray-500 dark:text-gray-400'>
+                        {new Date(project.date).toLocaleDateString("ko-KR", {
+                          year: "numeric",
+                          month: "long",
+                        })}
+                      </time>
+                      <span className='text-blue-600 dark:text-blue-400 text-sm font-medium inline-flex items-center'>
+                        더 보기
+                        <svg
+                          className='w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform'
+                          fill='none'
+                          stroke='currentColor'
+                          viewBox='0 0 24 24'>
+                          <path
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                            strokeWidth={2}
+                            d='M9 5l7 7-7 7'
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className='text-center py-16 bg-gray-50 dark:bg-gray-800 rounded-lg'>
+            <p className='text-gray-600 dark:text-gray-400'>
+              아직 작성된 프로젝트가 없습니다.
+            </p>
+          </div>
+        )}
       </section>
 
       <section className='relative'>
