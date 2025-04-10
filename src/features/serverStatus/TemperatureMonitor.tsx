@@ -26,6 +26,9 @@ export default function TemperatureMonitor() {
     };
 
     return () => {
+      // FIXME: 왜 소켓이 없다고 하냐?
+      if (!socket) return;
+
       socket.close();
     };
   }, []);
