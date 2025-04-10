@@ -106,6 +106,13 @@ export default function Layout({ children }: LayoutProps) {
                 </Link>
               </li>
               <li>
+                <Link
+                  href='/projects'
+                  className='text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+                  PROJECTS
+                </Link>
+              </li>
+              <li>
                 <a
                   href={GITHUB_URL}
                   target='_blank'
@@ -219,6 +226,26 @@ export default function Layout({ children }: LayoutProps) {
                   />
                 </svg>
                 BLOG
+              </Link>
+            </li>
+            <li>
+              <Link
+                href='/projects'
+                className='flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-2'
+                onClick={toggleMenu}>
+                <svg
+                  className='w-5 h-5 mr-3'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'>
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
+                  />
+                </svg>
+                PROJECTS
               </Link>
             </li>
           </ul>
