@@ -1,0 +1,105 @@
+:root {
+  --bg-color: hsl(49 37% 94%);
+  --typewriterSpeed: 6s;
+  --typewriteCharacter: 24;
+}
+
+.body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: var(--bg-color);
+}
+
+.body h1 {
+  font-size: clamp(1rem, 3vw + 1rem, 4rem);
+  position: relative;
+  font-family: monospace;
+  /* outline: 1px solid black; */
+  width: max-content;
+  color: #161616;
+  /* 성능 최적화를 위한 will-change */
+  will-change: contents;
+}
+
+.body h1::before,
+.body h1::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* 애니메이션 성능 최적화 */
+  will-change: left, background;
+}
+
+.body h1::before {
+  background: var(--bg-color);
+  animation: typewriter var(--typewriterSpeed) steps(var(--typewriteCharacter))
+    1s forwards;
+}
+
+.body h1::after {
+  width: 0.125em;
+  background: black;
+  animation: typewriter var(--typewriterSpeed) steps(var(--typewriteCharacter))
+      1s forwards,
+    blink 500ms steps(var(--typewriteCharacter)) infinite;
+}
+
+.body .subtitle {
+  color: hsl(0 0% 0% / 0.7);
+  font-size: 2rem;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(3rem);
+  animation: fadeInUp 2s ease calc(var(--typewriterSpeed) + 2s) forwards;
+  /* 애니메이션 성능 최적화 */
+  will-change: opacity, transform;
+}
+
+/* 로딩 상태 스타일 추가 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  font-family: monospace;
+  font-size: 1.5rem;
+  color: #161616;
+  background: var(--bg-color);
+  /* 로딩 애니메이션 */
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes typewriter {
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes blink {
+  to {
+    background: transparent;
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 1;
+  }
+}
